@@ -28,3 +28,24 @@
 #general placing, monitors, laptops, tablet, decending order
 #national instruments rapid prototyping award
 #mongoDB hack award: gift cards and trip
+
+
+#flow chart of functionality
+
+#New Users
+#Step 1. Sign up, home location, phone number stored
+            #-if signup exists, skip to Step 4.
+#Step 2. Basic close contacts added by user choice
+#Step 3. User acknowledges permissions
+#Step 4: send current data to server, server checks safety
+#           -If user is deemed safe, continue to home screen
+#           -Otherwise, ask for safety of user
+#               -If user says they are OK, continue to home screen
+#               -Otherwise, give user choice to notify friends
+                #   -friends notified
+#Step 5: take user to home screen, monitor activities close to the user
+#Step 6a: monitor activities of friends, safety of friends
+#           -note that this functionality is only availiable if both Users
+#           -designate each other as friends, so both users have the app
+#           -invite contacts to the app via various platforms (facebook, SMS, email)
+#Step 7: Rinse and repeat.
