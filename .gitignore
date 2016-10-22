@@ -27,9 +27,12 @@ local.properties
 /*/local.properties
 /*/out
 /*/*/build
+/*/build
 /*/*/production
 *.iml
 *.iws
 *.ipr
 *~
 *.swp
+
+.DS_Store
