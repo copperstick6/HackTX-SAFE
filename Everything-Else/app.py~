@@ -45,10 +45,8 @@ user_collect = None
 mail = Mail(app)
 
 # flashes form errors
-def flash_errors(form):
-	for field, errors in form.errors.items():
-		for err in errors:
-			flash("Error in the %s field: %s" % (getattr(form, field).label.text, err))
+def flash_errors():
+	
 
 # the home page
 @app.route('/')
