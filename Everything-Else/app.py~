@@ -136,7 +136,7 @@ def send_verification_email(unique_code, address):
 def login():
 	form = LoginForm(request.form)
 	if request.method == 'POST' and form.validate():
-		email = request.form['email']
+		email = form['email']
 		userRecord = mongo.db.users.find_one({'email': email})
 		if userRecord is not None:
 			user = User()

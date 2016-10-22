@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}WHATEVER YOU WANT THE TITLE TO BE {% endblock %}
+
+{% block body %}
+	{{ super() }}
+	
+	{% with msgs = get_flashed_messages() %}
+		{% if msgs %}
+			<ul class="errors">
+				{% for msg in msgs %}
+					<li>{{msg}}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
+	
+	<form method="POST" action="{{ url_for('signup') }}">
+	{{ form.hidden_tag() }}
+	
+	{{ form.first_name.label }}:
+	{{ form.first_name }}
+	<br/>
+	
+	{{ form.last_name.label }}:
+	{{ form.last_name }}
+	<br/>
+	
+	{{ form.email.label }}:
+	{{ form.email }}
+	<br/>
+	
+	{{ form.password.label }}:
+	{{ form.password }}
+	<br/>
+	
+	{{ form.repeat_password.label }}:
+	{{ form.repeat_password }}
+	<br/>
+	
+	{{ form.verify_method.label }}:
+	{{ form.verify_method }}
+	<br/>
+	
+	{{ form.submit }}
+	
+	</form>
+{% endblock %}
