@@ -1,3 +1,5 @@
+#given to addresses, return the distance in meters.
+
 import keys
 import urllib.request
 import json
@@ -12,6 +14,8 @@ def getWebUrl(address1, address2):
     for i in str(address1):
         if(i == " "):
             tempS+="+"
+        elif (i == ","):
+            tempS+=""
         else:
             tempS+= i
     s+= tempS + "&destinations="
@@ -32,6 +36,3 @@ def getDistance(address1, address2):
         obj = json.loads(str_response)
         s =obj["rows"][0]["elements"][0]["distance"]["value"]
         return s
-
-#distance in meters
-print(getDistance("6813 Beverly Glen Drive", "201 East 21st Street"))
