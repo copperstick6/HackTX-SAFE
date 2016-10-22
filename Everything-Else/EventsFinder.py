@@ -10,29 +10,31 @@ import codecs
 
 def getEvents(list1):
     s = "https://api.sigimera.org/v1/crises?auth_token="
-    s+= sigimeraAuth()
+    s+= keys.sigimeraAuth()
     webUrl  = urllib.request.urlopen(s)
-    if(webUrl.getcode() == 200)
+    if(webUrl.getcode() == 200):
         counter = 0
         response = webUrl.read().decode('utf-8')
         theJSON = json.loads(response)
-        for i in theJSON["_id"]
+        for i in theJSON:
             try:
-                list1.index(i["_id"])
-            catch:
-                counter++
+                list1.index(i)
+            except:
+                counter+=1
             if(counter!=0):
                 list2 = []
-                list2.append(i["_id"]["dc_title"])
-                list2.append(i["_id"]["dct_modified"])
-                s = str(i["_id"]["foaf_based_near"][1]) + str(i["_id"]["foaf_based_near"][0])
+                list2.append(i["dc_title"])
+                list2.append(i["dct_modified"])
+                s = str(i["foaf_based_near"][1]) + " , " + str(i["foaf_based_near"][0])
                 list2.append(s)
-                list2.append(i["_id"]["dc_subject"][0])
-                list2.append(["_id"]["dc_description"])
-                if(i["_id"]["gn_parentCountry"][0]!=" "):
-                    for j in i["_id"]["gn_parentCountry"]
-                        k+=i["_id"]["gn_parentCountry"]
+                list2.append(i["dc_subject"][0])
+                list2.append(i["dc_description"])
+                k = ""
+                if(i["gn_parentCountry"]!=" "):
+                    for j in i["gn_parentCountry"]:
+                        k+=str(i["gn_parentCountry"])
                     list2.append(k)
                 else:
                     list2.append("N/A, no affected countries")
                 list1.append(list2)
+        return list1
