@@ -29,7 +29,6 @@ def getWebUrl(address1, address2):
     return s
 
 def getDistance(address1, address2):
-    webUrl1 = urllib.request.urlopen(getWebUrl(address1, address2)).read().decode('utf8')
     webUrl = urllib.request.urlopen(getWebUrl(address1, address2))
     if (webUrl.getcode() == 200):
         str_response = webUrl.read().decode('utf-8')
