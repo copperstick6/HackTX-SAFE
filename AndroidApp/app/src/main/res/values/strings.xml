@@ -53,6 +53,8 @@
 
     <string name="register_next">Next</string>
     <string name="label_social_sign_up">Sign Up With a Social Account</string>
+    <string name="add_contact_label">Add</string>
+    <string name="invite_contact_label">Invite</string>
 
     <string name="register_first_step_view">Basic Info</string>
     <string name="register_second_step_view">Contact Info</string>

@@ -34,6 +34,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,11 +63,57 @@ public class ContactListContentFragment extends Fragment {
         public ImageView avator;
         public TextView name;
         public TextView description;
+        public Button addButton;
+        public Button addedButton;
+        public Button inviteButton;
+        public Button invitedButton;
+
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_list, parent, false));
+            super(inflater.inflate(R.layout.item_contact_list, parent, false));
             avator = (ImageView) itemView.findViewById(R.id.list_avatar);
             name = (TextView) itemView.findViewById(R.id.list_title);
             description = (TextView) itemView.findViewById(R.id.list_desc);
+            addButton = (Button) itemView.findViewById(R.id.add_contact);
+            addedButton = (Button) itemView.findViewById(R.id.added_contact);
+            inviteButton = (Button) itemView.findViewById(R.id.invite_contact);
+            invitedButton = (Button) itemView.findViewById(R.id.invited_contact);
+
+            addButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    addButton.setVisibility(View.GONE);
+                    addedButton.setVisibility(View.VISIBLE);
+                }
+            });
+
+            addedButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    addedButton.setVisibility(View.GONE);
+                    addButton.setVisibility(View.VISIBLE);
+                }
+            });
+
+            inviteButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    inviteButton.setVisibility(View.GONE);
+                    invitedButton.setVisibility(View.VISIBLE);
+                }
+            });
+
+            invitedButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    invitedButton.setVisibility(View.GONE);
+                    inviteButton.setVisibility(View.VISIBLE);
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,12 +130,6 @@ public class ContactListContentFragment extends Fragment {
      * Adapter to display recycler view.
      */
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        // Set numbers of List in RecyclerView.
-        //private static final int LENGTH = 18;
-
-        //private final String[] mPlaces;
-        //private final String[] mPlaceDesc;
-        //private final Drawable[] mPlaceAvators;
         private Context context;
 
         private final ArrayList<PhoneContact> mPhoneContacts;
@@ -97,14 +138,6 @@ public class ContactListContentFragment extends Fragment {
             Resources resources = context.getResources();
             mPhoneContacts = phoneContacts;
             this.context = context;
-            //mPlaces = resources.getStringArray(R.array.places);
-            //mPlaceDesc = resources.getStringArray(R.array.place_desc);
-            //TypedArray a = resources.obtainTypedArray(R.array.place_avator);
-            //mPlaceAvators = new Drawable[a.length()];
-            //for (int i = 0; i < mPlaceAvators.length; i++) {
-            //    mPlaceAvators[i] = a.getDrawable(i);
-            //}
-            //a.recycle();
         }
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -113,9 +146,6 @@ public class ContactListContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            //holder.avator.setImageDrawable(mPlaceAvators[position % mPlaceAvators.length]);
-            //holder.name.setText(mPlaces[position % mPlaces.length]);
-            //holder.description.setText(mPlaceDesc[position % mPlaceDesc.length]);
             Bitmap b = BitmapFactory.decodeStream(openPhoto(Integer.parseInt(mPhoneContacts.get(position).getContactId())));
             if(b != null) {
                 b.setDensity(Bitmap.DENSITY_NONE);
@@ -129,6 +159,11 @@ public class ContactListContentFragment extends Fragment {
             }
             holder.name.setText(mPhoneContacts.get(position).getDisplayName());
             holder.description.setText(mPhoneContacts.get(position).getPhoneNumber());
+            if(position > 10) {
+                holder.inviteButton.setVisibility(View.VISIBLE);
+            }else{
+                holder.addButton.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
