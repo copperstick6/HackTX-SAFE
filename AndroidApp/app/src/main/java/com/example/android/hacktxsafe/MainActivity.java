@@ -17,7 +17,9 @@
 package com.example.android.hacktxsafe;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -48,6 +50,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    public ArrayList<PhoneContact> phoneContacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +102,19 @@ public class MainActivity extends AppCompatActivity {
                         Snackbar.LENGTH_LONG).show();
             }
         });
+
+        phoneContacts = new ArrayList<>();
+        getPhoneContactsList();
+
+
     }
 
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new ListContentFragment(), "List");
-        adapter.addFragment(new TileContentFragment(), "Tile");
-        adapter.addFragment(new CardContentFragment(), "Card");
+        adapter.addFragment(new ContactListContentFragment(), "Following");
+        adapter.addFragment(new TileContentFragment(), "Disasters");
+        adapter.addFragment(new CardContentFragment(), "Alerts");
         viewPager.setAdapter(adapter);
     }
 
@@ -166,5 +174,22 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getPhoneContactsList() {
+        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+        while (phones.moveToNext())
+        {
+            String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String contactId = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+
+            phoneContacts.add(new PhoneContact(name, phoneNumber, contactId));
+        }
+        phones.close();
+    }
+
+    public ArrayList<PhoneContact> getPhoneContacts() {
+        return phoneContacts;
     }
 }

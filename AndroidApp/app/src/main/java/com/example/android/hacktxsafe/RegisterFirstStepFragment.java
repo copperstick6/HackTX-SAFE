@@ -57,6 +57,18 @@ public class RegisterFirstStepFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        /*
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        EditText firstName = (EditText)getActivity().findViewById(R.id.first_name);
+        EditText lastName = (EditText)getActivity().findViewById(R.id.last_name);
+        EditText email = (EditText)getActivity().findViewById(R.id.email);
+        EditText password = (EditText)getActivity().findViewById(R.id.password);
+
+        firstName.setText(sharedPref.getString("register_first_name",""));
+        lastName.setText(sharedPref.getString("register_last_name",""));
+        email.setText(sharedPref.getString("register_email",""));
+        password.setText(sharedPref.getString("register_password",""));
+        */
     }
 
     @Override
@@ -88,6 +100,23 @@ public class RegisterFirstStepFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
+        /*
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        EditText firstName = (EditText)getActivity().findViewById(R.id.first_name);
+        EditText lastName = (EditText)getActivity().findViewById(R.id.last_name);
+        EditText email = (EditText)getActivity().findViewById(R.id.email);
+        EditText password = (EditText)getActivity().findViewById(R.id.password);
+
+        editor.putString("register_first_name", firstName.getText().toString());
+        editor.putString("register_last_name", lastName.getText().toString());
+        editor.putString("register_email", email.getText().toString());
+        editor.putString("register_password", password.getText().toString());
+        editor.commit();
+        */
     }
 
     /**

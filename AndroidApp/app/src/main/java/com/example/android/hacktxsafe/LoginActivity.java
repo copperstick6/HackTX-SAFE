@@ -29,6 +29,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,8 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 LoginActivity.this.startActivity(myIntent);
             }
         });
-
-        mLoginFormView = findViewById(R.id.email_login_form);
 
         mProgressView = findViewById(R.id.login_progress);
 	    mLoginFormView = findViewById(R.id.email_login_form);
@@ -330,25 +339,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            int request = makePostRequest();
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            if(request == 200 || request == 500){
+                return true;
+            } else {
                 return false;
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
@@ -371,14 +368,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 	        }
 
 
-	        if (success) {
+            if(success){
                 Toast.makeText(getApplicationContext(),"Logged In!",Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                 myIntent.putExtra("loggedIn", true);
                 LoginActivity.this.startActivity(myIntent);
                 finish();
-
-            } else {
+            } else{
+                showProgress(false);
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
@@ -388,6 +385,48 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+
+        private int makePostRequest() {
+
+
+            HttpClient httpClient = new DefaultHttpClient();
+            // replace with your url
+            HttpPost httpPost = new HttpPost("http://turtleboys.com:8080/login");
+
+            EditText email = (EditText)findViewById(R.id.email);
+            EditText password = (EditText)findViewById(R.id.password);
+
+
+            //Post Data
+            List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+            nameValuePair.add(new BasicNameValuePair("email", email.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
+
+
+            //Encoding POST data
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+            } catch (UnsupportedEncodingException e) {
+                // log exception
+                e.printStackTrace();
+            }
+
+            //making POST request.
+            try {
+                HttpResponse response = httpClient.execute(httpPost);
+
+                return response.getStatusLine().getStatusCode();
+
+            } catch (ClientProtocolException e) {
+                // Log exception
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Log exception
+                e.printStackTrace();
+            }
+
+            return 0;
         }
     }
 }

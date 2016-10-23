@@ -1,6 +1,8 @@
 package com.example.android.hacktxsafe;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -52,6 +55,37 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFirst
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                EditText firstName = (EditText)findViewById(R.id.first_name);
+                EditText lastName = (EditText)findViewById(R.id.last_name);
+                EditText email = (EditText)findViewById(R.id.email);
+                EditText password = (EditText)findViewById(R.id.password);
+                EditText address = (EditText)findViewById(R.id.address);
+                EditText phoneNumber = (EditText)findViewById(R.id.phone_number);
+
+                if(null != firstName){
+                    editor.putString("register_first_name", firstName.getText().toString());
+                }
+                if(null != lastName){
+                    editor.putString("register_last_name", lastName.getText().toString());
+                }
+                if(null != email){
+                    editor.putString("register_email", email.getText().toString());
+                }
+                if(null != password){
+                    editor.putString("register_password", password.getText().toString());
+                }
+                if(null != address){
+                    editor.putString("register_address", address.getText().toString());
+                }
+                if(null != phoneNumber){
+                    editor.putString("register_phone_number", address.getText().toString());
+                }
+
+                editor.commit();
+
                 // Begin the transaction
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 switch (currentStepNumber){
@@ -63,6 +97,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFirst
                         ft.commit();
                         setTitle("Contact Info");
                         currentStepNumber++;
+
+                        //address.setText(sharedPref.getString("register_address",""));
+                        //address.setText(sharedPref.getString("register_phone_number",""));
                         break;
                     case 2 :
                         // Replace the contents of the container with the new fragment
@@ -91,6 +128,36 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFirst
 
     public void handleOnBackPressed() {
         //super.onBackPressed();
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        EditText firstName = (EditText)findViewById(R.id.first_name);
+        EditText lastName = (EditText)findViewById(R.id.last_name);
+        EditText email = (EditText)findViewById(R.id.email);
+        EditText password = (EditText)findViewById(R.id.password);
+        EditText address = (EditText)findViewById(R.id.address);
+        EditText phoneNumber = (EditText)findViewById(R.id.phone_number);
+
+        if(null != firstName){
+            editor.putString("register_first_name", firstName.getText().toString());
+        }
+        if(null != lastName){
+            editor.putString("register_last_name", lastName.getText().toString());
+        }
+        if(null != email){
+            editor.putString("register_email", email.getText().toString());
+        }
+        if(null != password){
+            editor.putString("register_password", password.getText().toString());
+        }
+        if(null != address){
+            editor.putString("register_address", address.getText().toString());
+        }
+        if(null != phoneNumber){
+            editor.putString("register_phone_number", address.getText().toString());
+        }
+
+        editor.commit();
 
         final Button mNextButton = (Button) findViewById(R.id.next_button);
 
@@ -109,6 +176,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFirst
                 ft.commit();
                 setTitle("Basic Info");
                 this.currentStepNumber--;
+                //firstName.setText(sharedPref.getString("register_first_name",""));
+                //lastName.setText(sharedPref.getString("register_last_name",""));
+                //email.setText(sharedPref.getString("register_email",""));
+                //password.setText(sharedPref.getString("register_password",""));
                 break;
             case 3 :
                 // Replace the contents of the container with the new fragment
@@ -118,6 +189,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFirst
                 ft.commit();
                 this.currentStepNumber--;
                 mNextButton.setText("Next");
+                address.setText(sharedPref.getString("register_address",""));
+                address.setText(sharedPref.getString("register_phone_number",""));
                 break;
         }
     }

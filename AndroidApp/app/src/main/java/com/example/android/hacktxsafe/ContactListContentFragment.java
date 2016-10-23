@@ -51,7 +51,14 @@ public class ContactListContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.recycler_view, container, false);
-        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext(), ((RegisterActivity)getActivity()).getPhoneContacts());
+
+        ContentAdapter adapter;
+        if (getActivity() instanceof MainActivity) {
+            adapter = new ContentAdapter(recyclerView.getContext(), ((MainActivity)getActivity()).getPhoneContacts());
+        } else {
+            adapter = new ContentAdapter(recyclerView.getContext(), ((RegisterActivity)getActivity()).getPhoneContacts());
+        }
+
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -96,6 +103,12 @@ public class ContactListContentFragment extends Fragment {
 
         public ContentAdapter(Context context, ArrayList<PhoneContact> phoneContacts) {
             Resources resources = context.getResources();
+
+            // Limit results to 6
+            if (context instanceof MainActivity) {
+
+            }
+
             mPhoneContacts = phoneContacts;
             this.context = context;
         }
