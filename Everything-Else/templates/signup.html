@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "layout.html" %}
 
 {% block title %}Register {% endblock %}
@@ -15,38 +16,87 @@
 		{% endif %}
 	{% endwith %}
 	
-	<form method="POST" action="{{ url_for('signup') }}">
-	{{ form.hidden_tag() }}
+	<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h2>Sign up</h2>
+      <h5 class="w3-padding-32">
+		  <form method="POST" action="{{ url_for('signup') }}">
+		{{ form.hidden_tag() }}
+		
+		{{ form.first_name.label }}:
+		{{ form.first_name }}
+		<br/>
+		
+		{{ form.last_name.label }}:
+		{{ form.last_name }}
+		<br/>
+		
+		{{ form.email.label }}:
+		{{ form.email }}
+		<br/>
+		
+		{{ form.password.label }}:
+		{{ form.password }}
+		<br/>
+		
+		{{ form.repeat_password.label }}:
+		{{ form.repeat_password }}
+		<br/>
+		
+		
+		{{ form.verify_method.label }}:
+		{{ form.verify_method }}
+		<br/>
+		
+		<script type="text/javascript>
+					function changeGroup(e) {
+			/*
+				1 - Remove all group classes
+				2 - Add the currently selected group class
+			*/
+			$("#main")
+				.removeClass(allGroups)
+				.addClass($("option:selected", e.target).val())
+		}
+
+		/* 
+			1 - Bind changeGroup function to "change" event
+			2 - Fetch all group from the select field 
+		*/
+		var allGroups = $("select")
+			.change(changeGroup)
+			.find("option")
+				.map(function() {
+					return $(this).val();
+				})
+				.get()
+				.join(' ');
+		
+		<div class="phone">
+		{{ form.phone_number.label }}:
+		{{ form.phone_number }}
+		<br/>
+		</div>
+		
+		{{ form.submit }}
+		
+		</form>
+	  </h5>
+
+      <p class="w3-text-grey"></p>
+    </div>
+
+    <div class="w3-third w3-right">
+      <img src="http://www.cs.utexas.edu/~danielc/Logo3.png" alt="Safe logo" width="250px">
+    </div>
+  </div>
+</div>
 	
-	{{ form.first_name.label }}:
-	{{ form.first_name }}
-	<br/>
-	
-	{{ form.last_name.label }}:
-	{{ form.last_name }}
-	<br/>
-	
-	{{ form.email.label }}:
-	{{ form.email }}
-	<br/>
-	
-	{{ form.password.label }}:
-	{{ form.password }}
-	<br/>
-	
-	{{ form.repeat_password.label }}:
-	{{ form.repeat_password }}
-	<br/>
-	
-	{{ form.verify_method.label }}:
-	{{ form.verify_method }}
-	<br/>
-	
-	{{ form.phone_number.label }}:
-	{{ form.phone_number }}
-	<br/>
-	
-	{{ form.submit }}
-	
-	</form>
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">
+  <div class="w3-xlarge w3-padding-32">
+   <i class="w3-hover-text-black">Created at HackTX2016</i>
+</footer>	
 {% endblock %}
+</html>
