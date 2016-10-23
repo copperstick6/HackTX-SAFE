@@ -83,3 +83,7 @@ def getFarCrimes(lat, lon):
                 list1.append(list2)
                 list2 = []
     return list1
+list1 = []
+print(getNaturalEvents(list1))
+print(getCloseCrimes(33.74,-84.39))
+print(getFarCrimes(33.74,-84.39))
