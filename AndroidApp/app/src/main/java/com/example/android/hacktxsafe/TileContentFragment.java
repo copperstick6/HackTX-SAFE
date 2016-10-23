@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,80 +36,108 @@ import android.widget.TextView;
  * Provides UI for the view with Tile.
  */
 public class TileContentFragment extends Fragment {
-
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    
+    
+    public TileContentFragment() {
+        // Required empty public constructor
+    }
+    
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment TileContentFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static TileContentFragment newInstance(String param1, String param2) {
+        TileContentFragment fragment = new TileContentFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        /*
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        EditText firstName = (EditText)getActivity().findViewById(R.id.first_name);
+        EditText lastName = (EditText)getActivity().findViewById(R.id.last_name);
+        EditText email = (EditText)getActivity().findViewById(R.id.email);
+        EditText password = (EditText)getActivity().findViewById(R.id.password);
 
+        firstName.setText(sharedPref.getString("register_first_name",""));
+        lastName.setText(sharedPref.getString("register_last_name",""));
+        email.setText(sharedPref.getString("register_email",""));
+        password.setText(sharedPref.getString("register_password",""));
+        */
+    }
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.recycler_view, container, false);
-        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        // Set padding for Tiles
-        int tilePadding = getResources().getDimensionPixelSize(R.dimen.tile_padding);
-        recyclerView.setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        return recyclerView;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.weather, container, false);
     }
+    
+    // TODO: Rename method, update argument and hook method into UI event
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView picture;
-        public TextView name;
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_tile, parent, false));
-            picture = (ImageView) itemView.findViewById(R.id.tile_picture);
-            name = (TextView) itemView.findViewById(R.id.tile_title);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
-                    context.startActivity(intent);
-                }
-            });
-        }
+    
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        
     }
+    
+    @Override
+    public void onDetach() {
+        super.onDetach();
+       
 
+        /*
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        EditText firstName = (EditText)getActivity().findViewById(R.id.first_name);
+        EditText lastName = (EditText)getActivity().findViewById(R.id.last_name);
+        EditText email = (EditText)getActivity().findViewById(R.id.email);
+        EditText password = (EditText)getActivity().findViewById(R.id.password);
+
+        editor.putString("register_first_name", firstName.getText().toString());
+        editor.putString("register_last_name", lastName.getText().toString());
+        editor.putString("register_email", email.getText().toString());
+        editor.putString("register_password", password.getText().toString());
+        editor.commit();
+        */
+    }
+    
     /**
-     * Adapter to display recycler view.
-     */
-    public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        // Set numbers of Tiles in RecyclerView.
-        private static final int LENGTH = 18;
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
 
-        private final String[] mPlaces;
-        private final Drawable[] mPlacePictures;
-        public ContentAdapter(Context context) {
-            Resources resources = context.getResources();
-            mPlaces = resources.getStringArray(R.array.places);
-            TypedArray a = resources.obtainTypedArray(R.array.places_picture);
-            mPlacePictures = new Drawable[a.length()];
-            for (int i = 0; i < mPlacePictures.length; i++) {
-                mPlacePictures[i] = a.getDrawable(i);
-            }
-            a.recycle();
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.picture.setImageDrawable(mPlacePictures[position % mPlacePictures.length]);
-            holder.name.setText(mPlaces[position % mPlaces.length]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return LENGTH;
-        }
     }
+     */
 }
