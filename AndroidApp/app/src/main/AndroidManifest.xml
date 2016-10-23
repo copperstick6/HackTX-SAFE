@@ -48,6 +48,7 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
+            android:screenOrientation="portrait"
             android:parentActivityName=".LoginActivity"
             android:theme="@style/AppTheme">
             <meta-data

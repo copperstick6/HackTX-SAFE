@@ -34,6 +34,11 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_phone_number">Phone Number</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_password_confirm">Re-Type Password</string>
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
     <string name="action_sign_in">Log In</string>
     <string name="action_sign_up">Sign Up</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -46,8 +51,10 @@
     </string>
     <string name="title_activity_register">RegisterActivity</string>
 
-    <string name="register_first_step_view">Step One</string>
-    <string name="register_second_step_view">Step Two</string>
-    <string name="register_third_step_view">Step Three</string>
     <string name="register_next">Next</string>
+    <string name="label_social_sign_up">Sign Up With a Social Account</string>
+
+    <string name="register_first_step_view">Basic Info</string>
+    <string name="register_second_step_view">Contact Info</string>
+    <string name="register_third_step_view">Add Contacts to Track</string>
 </resources>
