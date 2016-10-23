@@ -35,3 +35,32 @@ def getDistance(address1, address2):
         obj = json.loads(str_response)
         s =obj["rows"][0]["elements"][0]["distance"]["value"]
         return s
+def getUnFormattedLongLat(address1):
+    s = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    tempString = ""
+    for i in str(address1):
+        if(i == " "):
+            tempString+="+"
+        else:
+            tempString+=i
+    s+=tempString + "&key=" + keys.GoogleMapsKey()
+    print(s)
+    webUrl = urllib.request.urlopen(s)
+    if(webUrl.getcode()==200):
+        str_response = webUrl.read().decode('utf-8')
+        obj = json.loads(str_response)
+        list1 = []
+        list1.append(obj["results"][0]["geometry"]["location"]["lat"])
+        list1.append(obj["results"][0]["geometry"]["location"]["lng"])
+    return list1
+
+def getFormattedLat(list1):
+    return list1[0]
+def getFormattedLong(list1):
+    return list1[1]
+a = getUnFormattedLongLat("6813 Beverly Glen Drive")
+print(a)
+b = getFormattedLat(a)
+print(b)
+c = getFormattedLong(a)
+print(c)
