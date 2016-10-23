@@ -17,25 +17,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimary">@color/primary</item>
         <!-- Light Indigo -->
-        <item name="colorPrimaryDark">#3949AB</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
         <!-- Dark Indigo -->
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/accent</item>
         <!-- Blue -->
     </style>
 
-    <style name="AppTheme" parent="AppTheme.Base">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/white</item>
+    <style name="AppTheme" parent="AppTheme.Base"/>
 
-        <item name="android:textColorHint">@color/white</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-
-    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
