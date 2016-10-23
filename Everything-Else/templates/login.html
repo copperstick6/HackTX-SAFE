@@ -1,54 +1,46 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 
-{% block title %}Index{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
 	{{ super() }}
 	
-	<!-- Header -->
-<header class="w3-container w3-orange w3-center w3-padding-128">
-  <h1 class="w3-margin w3-jumbo">Register Now</h1>
-  <p class="w3-xlarge">Enter your information to stay connected when it matters most</p>
-  <a href="login.html" class="w3-btn w3-padding-16 w3-large w3-margin-top button">Get Started</a>
-</header>
-
-<!-- First Grid -->
-<div class="w3-row-padding w3-padding-64 w3-container">
-  <div class="w3-content">
-    <div class="w3-twothird">
-      <h1>Sign up</h1>
-      <h5 class="w3-padding-32">Receive updates when a loved one is near a reported danger</h5>
-
-      <p class="w3-text-grey"> Have the option to let others know you are safe when Safe detects you are near a reported danger</p>
-    </div>
-
-    <div class="w3-third w3-right">
-      <img src="http://www.cs.utexas.edu/~danielc/Logo3.png" alt="Safe logo" width="250px">
-    </div>
-  </div>
-</div>
-
-<!-- Second Grid -->
-<div class="w3-row-padding w3-black w3-padding-64 w3-container">
-  <div class="w3-content">
-
-    <div class="w3-twothird">
-      <h1></h1>
-      <h5 class="w3-padding-32"></h5>
+	{% with msgs = get_flashed_messages() %}
+		{% if msgs %}
+			<ul class="errors">
+				{% for msg in msgs %}
+					<li>{{msg}}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
+	<h2>Login</h2>
+	<h5 class="w3-padding-32">
+		<form method="POST" action="{{ url_for('login') }}">
+		{{ form.hidden_tag() }}
+		
+		{{ form.email.label }}:
+		{{ form.email }}
+		<br/>
+		
+		{{ form.password.label }}:
+		{{ form.password }}
+		<br/>
+		
+		{{ form.submit }}
+		
+		</form>
+	  </h5>
 
       <p class="w3-text-grey"></p>
     </div>
-  </div>
-</div>
-
-<!-- Footer -->
+	
+	<!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">
   <div class="w3-xlarge w3-padding-32">
    <i class="w3-hover-text-black">Created at HackTX2016</i>
 </footer>
-	
-	
-{% endblock %}
 
+{% endblock %}
 </html>
