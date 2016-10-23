@@ -1,0 +1,31 @@
+{
+    "intents": [
+        {
+            "intent": "LocationServices",
+            "slots": [
+               {
+                  	"name": "location",
+                 	"type": "AMAZON_LITERAL"
+                }
+            ],
+            "intent": "NaturalDisasterServices",
+            "slots": [
+              {
+                "name": "disasters",
+                "type": "AMAZON.US_STATE"
+              },
+              {
+                "name": "crimes",
+                "type": "AMAZON.US_STATE"
+              }
+            ],
+            "intent": "WeatherServices",
+            "slots":[
+              {
+                "name": "weather",
+                "type": "AMAZON.US_CITY"
+              }
+            ]
+        }
+      ]
+}

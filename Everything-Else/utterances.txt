@@ -1,0 +1,20 @@
+LocationServices            How far is it from {location}
+LocationServices            What is my current location
+LocationServices            Find my Coordinates
+LocationServices            Tell me about where I am
+NaturalDisasterServices     Tell me about disasters
+NaturalDisasterServices     Tell me about new disasters
+NaturalDisasterServices     Tell me about the latest large loss of life
+NaturalDisasterServices     Give me a random disaster
+NaturalDisasterServices     What are the last disasters that happened?
+NaturalDisasterServices       Tell me about things happening in my neighborhood
+NaturalDisasterServices      Tell me about a crime
+NaturalDisasterServices       Tell me about a crime near me
+NaturalDisasterServices       Tell me about a crime near a friends
+NaturalDisasterServices       Give me a random crime
+weatherServices             Tell me about the outdoors
+weatherServices             How nice is it outside
+weatherServices             What is like outside
+weatherServices             How is the day
+AMAZON.HelpIntent           what are the categories
+AMAZON.HelpIntent           what can I ask about
