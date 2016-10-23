@@ -12,6 +12,7 @@ import keys
 import sys
 from googleMapsDistance import *
 from latLonCalc import *
+from EventsFinder import *
 import threading
 
 # method to check if the email is unique
@@ -276,31 +277,38 @@ def verify():
 
 events = []
 def send_alerts():
-	try:
-		# change value later
-		threading.Timer(10, send_alerts).start()
-		print('BEFORE QUERY', file=sys.stderr)
-		all_users = mongo.db.users.find()
-		print('AFTER QUERY', file=sys.stderr)
-		events = getNaturalEvenets(events)
-		print('GOT EVENTS', file=sys.stderr)
-		#coords = [(float(j) for j in i[2].split(' , ')) for i in events]
-		for user in all_users:
-			for event in events:
-				eventLat, eventLon = [float(i) for i in event[2].split(' , ')]
-				userLat = user['lat']
-				userLon = user['long']
-				msg_body = user['first_name'] + ' ' + user['last_name'] + ' is near ' + events[0]
-				if calculateDistance(eventLat, evenLon, userLat, userLon) < 5:
-					ppl = user['contacts']
-					for person in ppl:
-						print('SENDING MSG', file=sys.stderr)
-						if person.get('phone_number') != '':
-							send_emergency_text(person.get('phone_number'), msg_body)
-						if person.get('email') != '':
-							send_emergency_email(person.get('phone_number'), msg_body)
-	except RuntimeError:
-		pass
+	global events
+	
+	with app.app_context():
+		try:
+			# change value later
+			threading.Timer(10, send_alerts).start()
+			print('BEFORE QUERY', file=sys.stderr)
+			all_users = mongo.db.users.find()
+			print('AFTER QUERY', file=sys.stderr)
+			events = getNaturalEvents(events)
+			print('EVENTS:', events, file=sys.stderr)
+			print('GOT EVENTS', file=sys.stderr)
+			#coords = [(float(j) for j in i[2].split(' , ')) for i in events]
+			for user in all_users:
+				for event in events:
+					print('USER, EVENT PAIR', file=sys.stderr)
+					eventLat, eventLon = [float(i) for i in event[2].split(' , ')]
+					userLat = user['lat']
+					userLon = user['long']
+					msg_body = user['first'] + ' ' + user['last'] + ' is near ' + event[0]
+					if calculateDistance(eventLat, eventLon, userLat, userLon) < 5000000:
+						print('IN DISTANCE', file=sys.stderr)
+						ppl = user['contacts']
+						for person in ppl:
+							print('SENDING MSG', file=sys.stderr)
+							if person.get('phone_number') != '':
+								send_emergency_text(person.get('phone_number'), msg_body)
+							if person.get('email') != '':
+								send_emergency_email(person.get('phone_number'), msg_body)
+		except:
+			pass
+		
 
 # send emergency text
 # TODO deal w/ missing number

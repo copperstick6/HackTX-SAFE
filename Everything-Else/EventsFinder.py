@@ -21,7 +21,8 @@ def getNaturalEvents(list1):
                 list1.index(i)
             except:
                 counter+=1
-            if(counter!=0):
+            if(counter==0):
+                counter = 0
                 list2 = []
                 list2.append(i["dc_title"])
                 list2.append(i["dct_modified"])
@@ -37,7 +38,8 @@ def getNaturalEvents(list1):
                 else:
                     list2.append("N/A, no affected countries")
                 list1.append(list2)
-        return list1
+                
+    return list1
 
 def getCloseCrimes(lat, lon):
     s= 'http://api.spotcrime.com/crimes.json?lat='
@@ -83,7 +85,3 @@ def getFarCrimes(lat, lon):
                 list1.append(list2)
                 list2 = []
     return list1
-list1 = []
-print(getNaturalEvents(list1))
-print(getCloseCrimes(33.74,-84.39))
-print(getFarCrimes(33.74,-84.39))
