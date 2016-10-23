@@ -8,7 +8,7 @@ import codecs
 #each element's list's elements are as follows: (All elements in array are string)
 #(title, date, coordinates, disaster type, description, affected countries)
 
-def getEvents(list1):
+def getNaturalEvents(list1):
     s = "https://api.sigimera.org/v1/crises?auth_token="
     s+= keys.sigimeraAuth()
     webUrl  = urllib.request.urlopen(s)
@@ -38,3 +38,46 @@ def getEvents(list1):
                     list2.append("N/A, no affected countries")
                 list1.append(list2)
         return list1
+
+def getCloseCrimes(lat, lon):
+    s= 'http://api.spotcrime.com/crimes.json?lat='
+    s+=str(lat) + "&"
+    s+="lon=" + str(lon)
+    s+="&radius=2&key=."
+    list1=[]
+    list2 = []
+    webUrl = urllib.request.urlopen(s)
+    if(webUrl.getcode() == 200):
+        response = webUrl.read().decode('utf-8')
+        theJSON = json.loads(response)["crimes"]
+        for i in theJSON:
+            if(i["type"]!="Shooting"):
+                list2.append(i["address"])
+                list2.append(i["lat"])
+                list2.append(i["lon"])
+                list2.append(i["type"])
+                list2.append(i["date"])
+    list1.append(list2)
+    return list1
+
+#objects within list, in order: address, lat and long of activity, type, date,
+def getFarCrimes(lat, lon):
+    s= 'http://api.spotcrime.com/crimes.json?lat='
+    s+=str(lat) + "&"
+    s+="lon=" + str(lon)
+    s+="&radius=2&key=."
+    list1=[]
+    list2 = []
+    webUrl = urllib.request.urlopen(s)
+    if(webUrl.getcode() == 200):
+        response = webUrl.read().decode('utf-8')
+        theJSON = json.loads(response)["crimes"]
+        for i in theJSON:
+            if(i["type"]=="Shooting"):
+                list2.append(i["address"])
+                list2.append(i["lat"])
+                list2.append(i["lon"])
+                list2.append(i["type"])
+                list2.append(i["date"])
+    list1.append(list2)
+    return list1
