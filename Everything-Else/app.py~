@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 import flask_login
 from flask_pymongo import PyMongo
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, validators, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FieldList, FormField, validators, ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
 from twilio.rest import TwilioRestClient
 from flask_mail import Mail, Message
@@ -51,6 +51,21 @@ class LoginForm(FlaskForm):
 class VerifyForm(FlaskForm):
 	number = IntegerField('Verification Number', [validators.DataRequired('Verification Number is required and must be numeric')])
 	submit = SubmitField('Verify')
+
+# The form for one contact
+class ContactForm(FlaskForm):
+	name = StringField('Name', [validators.DataRequired('Name is required')])
+	phone_number = StringField('Phone Number', [])
+	email_field = StringField('Email', [validators.Email])
+
+# The form for multiple contacts
+class MultiContactForm(FlaskForm):
+	all_contacts = FieldList(FormField(ContactForm), min_entries=1)
+	submit = SubmitField('Update Contacts')
+	def validate(self, **kwargs):
+		if not super().validate():
+			self.all_contacts.errors += (super().errors, 'super not validated')
+			return False
 
 # User class (used for logging in)
 class User(flask_login.UserMixin):
@@ -122,8 +137,8 @@ def signup():
 				return render_template('signup.html', form = form), 401
 		#place user in database
 		mongo.db.users.insert_one({'email': email, 'password': passwordHash, 'verify_code': unique_code,
-			'first': first, 'last': last})
-		return redirect(url_for('index'))
+			'first': first, 'last': last, 'contacts': []})
+		return redirect(url_for('verify'))
 	elif request.method == 'POST':
 		flash_errors(form)
 		return render_template('signup.html', form = form), 401
@@ -198,14 +213,35 @@ def logout():
 	flask_login.logout_user()
 	return redirect(url_for('index'))
 
-@app.route('/settings')
+@app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
 	email = flask_login.current_user.id
-	verify_code = mongo.db.users.find_one({'email': email})['verify_code']
+	userRecord =  mongo.db.users.find_one({'email': email})
+	verify_code = userRecord['verify_code']
 	if verify_code != None:
 		return redirect(url_for('verify'))
-	return email
+	contacts = userRecord['contacts']
+	print(contacts, file=sys.stderr)
+	for i in contacts:
+		print(i, file=sys.stderr)
+	form = MultiContactForm(request.form)
+	print(form.all_contacts, file=sys.stderr)
+	all_contacts = form.all_contacts
+	to_add = []
+	if request.method == 'POST':
+		while len(all_contacts) > 0:
+			cf = all_contacts.pop_entry()
+			#if cf['name'].validate() and cf['phone_number'].validate() and cf['email_field'].validate():
+			to_add.append({'name': cf['name'].data, 'phone_number': cf['phone_number'].data,'email_field': cf['email_field'].data})
+			print(to_add, file=sys.stderr)
+			#else:
+			#	flash_errors(cf)
+			#	return render_template('settings.html', form = form)
+			#print(cf, file=sys.stderr)
+		mongo.db.users.update_one({'email': email}, {'$set': {'contacts': to_add}})
+	return render_template('settings.html', form = form)
+	
 
 @app.route('/verify', methods=['GET', 'POST'])
 @login_required
