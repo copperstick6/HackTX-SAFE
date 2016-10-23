@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:visibility="gone"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"/>
 
         <RelativeLayout
             android:id="@+id/email_login_form"
@@ -39,10 +39,17 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="SAFE"
                 android:id="@+id/textView"
-                android:layout_marginBottom="81dp"
-                android:layout_above="@+id/email_input_login_form"
+                android:layout_marginTop="170dp"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_marginTop="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icon"/>
 
             <RelativeLayout
                 android:id="@+id/email_input_login_form"
@@ -121,7 +128,7 @@
             android:text="@string/action_sign_up"
             android:textStyle="bold"
             android:background="@color/accent"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </RelativeLayout>
 
 </RelativeLayout>
