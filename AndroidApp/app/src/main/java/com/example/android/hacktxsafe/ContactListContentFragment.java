@@ -18,7 +18,6 @@ package com.example.android.hacktxsafe;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -64,9 +63,7 @@ public class ContactListContentFragment extends Fragment {
         public TextView name;
         public TextView description;
         public Button addButton;
-        public Button addedButton;
         public Button inviteButton;
-        public Button invitedButton;
 
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.item_contact_list, parent, false));
@@ -74,42 +71,8 @@ public class ContactListContentFragment extends Fragment {
             name = (TextView) itemView.findViewById(R.id.list_title);
             description = (TextView) itemView.findViewById(R.id.list_desc);
             addButton = (Button) itemView.findViewById(R.id.add_contact);
-            addedButton = (Button) itemView.findViewById(R.id.added_contact);
             inviteButton = (Button) itemView.findViewById(R.id.invite_contact);
-            invitedButton = (Button) itemView.findViewById(R.id.invited_contact);
-
-            addButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    addButton.setVisibility(View.GONE);
-                    addedButton.setVisibility(View.VISIBLE);
-                }
-            });
-
-            addedButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    addedButton.setVisibility(View.GONE);
-                    addButton.setVisibility(View.VISIBLE);
-                }
-            });
-
-            inviteButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    inviteButton.setVisibility(View.GONE);
-                    invitedButton.setVisibility(View.VISIBLE);
-                }
-            });
-
-            invitedButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    invitedButton.setVisibility(View.GONE);
-                    inviteButton.setVisibility(View.VISIBLE);
-                }
-            });
-
+            /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,6 +82,7 @@ public class ContactListContentFragment extends Fragment {
                     context.startActivity(intent);
                 }
             });
+            */
         }
     }
 
@@ -141,7 +105,7 @@ public class ContactListContentFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
             Bitmap b = BitmapFactory.decodeStream(openPhoto(Integer.parseInt(mPhoneContacts.get(position).getContactId())));
             if(b != null) {
                 b.setDensity(Bitmap.DENSITY_NONE);
@@ -157,8 +121,36 @@ public class ContactListContentFragment extends Fragment {
             holder.description.setText(mPhoneContacts.get(position).getPhoneNumber());
             if(position > 10) {
                 holder.inviteButton.setVisibility(View.VISIBLE);
+
+                holder.inviteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Button btn = (Button) v.findViewById(R.id.invite_contact);
+                        if(btn.getText().toString().compareToIgnoreCase("INVITE") == 0){
+                            btn.setText("INVITED");
+                            btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_circle_black_24dp, 0, 0, 0);
+                        } else{
+                            btn.setText("INVITE");
+                            btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_circle_outline_black_24dp, 0, 0, 0);
+                        }
+                    }
+                });
             }else{
                 holder.addButton.setVisibility(View.VISIBLE);
+
+                holder.addButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Button btn = (Button) v.findViewById(R.id.add_contact);
+                        if(btn.getText().toString().compareToIgnoreCase("ADD") == 0){
+                            btn.setText("ADDED");
+                            btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_circle_black_24dp, 0, 0, 0);
+                        } else{
+                            btn.setText("ADD");
+                            btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_circle_outline_black_24dp, 0, 0, 0);
+                        }
+                    }
+                });
             }
         }
 
