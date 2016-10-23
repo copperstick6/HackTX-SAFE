@@ -90,7 +90,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-	    
+
+        Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
+        mEmailSignUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                LoginActivity.this.startActivity(myIntent);
+            }
+        });
+
+        mLoginFormView = findViewById(R.id.email_login_form);
+
         mProgressView = findViewById(R.id.login_progress);
 	    mLoginFormView = findViewById(R.id.email_login_form);
 	    mSignUpFormView = findViewById(R.id.signup_form);
@@ -221,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
-	
+
 	        mSignUpFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 	        mSignUpFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
@@ -245,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 	        mSignUpFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-	        
+
         }
     }
 
@@ -345,7 +356,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
 	        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
 		        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-		
+
 		        mProgressView.setVisibility(View.GONE);
 		        mProgressView.animate().setDuration(shortAnimTime).alpha(0).setListener(new AnimatorListenerAdapter() {
 			        @Override
@@ -358,8 +369,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 		        // and hide the relevant UI components.
 		        mProgressView.setVisibility(View.GONE);
 	        }
-	
-	
+
+
 	        if (success) {
                 Toast.makeText(getApplicationContext(),"Logged In!",Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
