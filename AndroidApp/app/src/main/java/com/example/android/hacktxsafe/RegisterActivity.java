@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterFirstStepFragment.OnFragmentInteractionListener,
-        RegisterSecondStepFragment.OnFragmentInteractionListener,RegisterThirdStepFragment.OnFragmentInteractionListener{
+        RegisterSecondStepFragment.OnFragmentInteractionListener{
 
     private int currentStepNumber = 1;
     public ArrayList<PhoneContact> phoneContacts;

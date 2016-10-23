@@ -59,4 +59,5 @@
     <string name="register_first_step_view">Basic Info</string>
     <string name="register_second_step_view">Contact Info</string>
     <string name="register_third_step_view">Add Contacts to Track</string>
+    <string name="label_email_sign_up">Sign Up With Email</string>
 </resources>

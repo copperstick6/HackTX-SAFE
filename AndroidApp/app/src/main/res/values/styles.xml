@@ -26,6 +26,9 @@
     </style>
 
     <style name="AppTheme" parent="AppTheme.Base"/>
+    <style name="LoginTheme" parent="AppTheme.Base">
+        <item name="colorAccent">@color/white</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
