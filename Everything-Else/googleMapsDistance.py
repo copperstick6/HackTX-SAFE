@@ -58,9 +58,3 @@ def getFormattedLat(list1):
     return list1[0]
 def getFormattedLong(list1):
     return list1[1]
-a = getUnFormattedLongLat("6813 Beverly Glen Drive")
-print(a)
-b = getFormattedLat(a)
-print(b)
-c = getFormattedLong(a)
-print(c)
