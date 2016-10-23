@@ -66,7 +66,6 @@ def getFarCrimes(lat, lon):
     s+=str(lat) + "&"
     s+="lon=" + str(lon)
     s+="&radius=2&key=."
-    print(s)
     list1=[]
     list2 = []
     webUrl = urllib.request.urlopen(s)
