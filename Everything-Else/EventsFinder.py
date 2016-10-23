@@ -57,7 +57,8 @@ def getCloseCrimes(lat, lon):
                 list2.append(i["lon"])
                 list2.append(i["type"])
                 list2.append(i["date"])
-    list1.append(list2)
+                list1.append(list2)
+                list2=[]
     return list1
 
 #objects within list, in order: address, lat and long of activity, type, date,
@@ -79,5 +80,6 @@ def getFarCrimes(lat, lon):
                 list2.append(i["lon"])
                 list2.append(i["type"])
                 list2.append(i["date"])
-    list1.append(list2)
+                list1.append(list2)
+                list2 = []
     return list1
