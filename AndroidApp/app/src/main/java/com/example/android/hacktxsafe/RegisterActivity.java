@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFirst
                         // or ft.add(R.id.your_placeholder, new FooFragment());
                         // Complete the changes added above
                         ft.commit();
-                        mNextButton.setText("Register");
+                        mNextButton.setText("Finish");
                         currentStepNumber++;
                         break;
                     case 3 :

@@ -49,4 +49,5 @@
     <string name="register_first_step_view">Step One</string>
     <string name="register_second_step_view">Step Two</string>
     <string name="register_third_step_view">Step Three</string>
+    <string name="register_next">Next</string>
 </resources>
