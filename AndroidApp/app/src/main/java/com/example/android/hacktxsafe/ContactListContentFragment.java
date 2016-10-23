@@ -81,7 +81,6 @@ public class ContactListContentFragment extends Fragment {
             addButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
                     addButton.setVisibility(View.GONE);
                     addedButton.setVisibility(View.VISIBLE);
                 }
@@ -90,7 +89,6 @@ public class ContactListContentFragment extends Fragment {
             addedButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
                     addedButton.setVisibility(View.GONE);
                     addButton.setVisibility(View.VISIBLE);
                 }
@@ -99,7 +97,6 @@ public class ContactListContentFragment extends Fragment {
             inviteButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
                     inviteButton.setVisibility(View.GONE);
                     invitedButton.setVisibility(View.VISIBLE);
                 }
@@ -108,7 +105,6 @@ public class ContactListContentFragment extends Fragment {
             invitedButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
                     invitedButton.setVisibility(View.GONE);
                     inviteButton.setVisibility(View.VISIBLE);
                 }
