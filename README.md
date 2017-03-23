@@ -1,10 +1,10 @@
-#HackTX SAFE project.<br />
+# HackTX SAFE project.<br />
 
-##Winner of the JPMorgan Chase Best Social Good Hack Award <br />
+## Winner of the JPMorgan Chase Best Social Good Hack Award <br />
 
 APIs done currently: all. <br />
 
-###List of APIs: <br />
+### List of APIs: <br />
 <br />
 <br />
 Openweathermap [link](https://openweathermap.org/)<br />
